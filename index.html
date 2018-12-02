@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>FlexBE State Overview</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="style/main.css" />
+	<link rel="icon" type="img/png" href="img/icon-16.png">
+	<script src="packages.js"></script>
+	<script src="scripts/prototype.js"></script>
+	<script src="scripts/io.js"></script>
+	<script src="scripts/io_stateparser.js"></script>
+	<script src="scripts/ws.js"></script>
+	<script src="scripts/ws_documentation.js"></script>
+	<script src="scripts/ws_statedefinition.js"></script>
+	<script src="scripts/terminal.js"></script>
+	<script src="scripts/core.js"></script>
+</head>
+
+<body>
+
+	<div id="toprow">
+		<table id="link_panel">
+			<tr>
+				<td><img src="img/logo_borderless.png" width="16" /></td>
+				<td><a href="https://flexbe.github.io" target="_blank">Homepage</a></td>
+			</tr>
+			<tr>
+				<td><img src="img/ros_icon.png" width="16" /></td>
+				<td><a href="https://wiki.ros.org/flexbe" target="_blank">ROS Wiki</a></td>
+			</tr>
+			<tr>
+				<td><img src="img/smile.png" width="16" /></td>
+				<td><a href="http://philserver.bplaced.net/fbe/contribution.php" target="_blank">Contribute</a></td>
+			</tr>
+		</table>
+
+		<img id="logo" src="img/logo.png" />
+		<div id="title">
+			<h1 style="margin:0">Flex<b>BE</b></h1>
+			State Library
+		</div>
+
+		<input type="text" size="" id="search_field" placeholder="Search states" />
+	</div>
+
+	<div id="package_list"></div>
+
+	<div id="state_details_hint">
+		<b><i>Select a state<br />
+		to view details.</i></b>
+	</div>
+
+	<div id="state_details">
+		<h2 id="state_details_class"></h2>
+		<div id="state_details_description"></div>
+		<table id="state_details_table">
+			<tr>
+				<td>Package:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td id="state_details_package"></td>
+			</tr>
+			<!--
+			<tr>
+				<td>Author:</td>
+				<td id="state_details_author"></td>
+			</tr>
+			<tr>
+				<td>Updated:</td>
+				<td id="state_details_date"></td>
+			</tr>
+			-->
+			<tr>
+				<td>Source:</td>
+				<td><a id="state_details_url" target="_blank"></a></td>
+			</tr>
+		</table>
+		<div id="state_details_parameters">
+			<h3>State Parameters</h3>
+			<ul class="state_details_content" id="state_details_parameters_content"></ul>
+		</div>
+		<div id="state_details_outcomes">
+			<h3>State Outcomes</h3>
+			<ul class="state_details_content" id="state_details_outcomes_content"></ul>
+		</div>
+		<div id="state_details_input">
+			<h3>Input Keys</h3>
+			<ul class="state_details_content" id="state_details_input_content"></ul>
+		</div>
+		<div id="state_details_output">
+			<h3>Output Keys</h3>
+			<ul class="state_details_content" id="state_details_output_content"></ul>
+		</div>
+		<!--
+		<h3>Version History</h3>
+		<ul id="state_details_history"></ul>
+		-->
+	</div>
+
+	<div id="quota_display">
+		<h3>Quota reached!</h3>
+		The limit of available GitHub API calls has been reached.
+		Please wait for the counter to reset before new requests can be processed.
+		<br />Reset in: <b><div id="quota_time"></div></b>.
+	</div>
+
+</body>

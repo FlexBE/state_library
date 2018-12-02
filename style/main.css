@@ -1,0 +1,216 @@
+body {
+	margin: 0;
+	background-color: #eee;
+	font-family: Helvetica, sans-serif;
+}
+
+a:link, a:visited {
+	color: #35A;
+	text-decoration: none;
+}
+
+a:active, a:hover {
+	color: #69F;
+    text-decoration: underline;
+}
+
+#toprow {
+	position: fixed;
+	height: 100px;
+	width: 100%;
+	background: linear-gradient(#f2f2f2, #e5e5e5);
+	border-bottom: 1px solid black;
+	vertical-align: middle;
+	box-shadow: 2px 2px 15px #999;
+	z-index: 50;
+}
+
+#logo {
+	display: inline-block;
+	height: 100px;
+	width: 128px;
+	vertical-align: middle;
+}
+
+#title {
+	display: inline-block;
+	color: #888;
+	vertical-align: middle;
+}
+#title h1 {
+	color: #aaa;
+	font-weight: normal;
+	font-style: italic;
+	line-height: 1.4em;
+	font-size: 23pt;
+	text-shadow: -1px -1px 0px #bbb, 1px 1px 0px #fff;
+}
+
+#link_panel {
+    float: right;
+    margin-right: 20px;
+    padding: 5px;
+}
+#link_panel img {
+    vertical-align: middle;
+}
+#link_panel td {
+    list-style-type: none;
+    vertical-align: middle;
+    text-align: left;
+}
+#link_panel a:link, #link_panel a:visited {
+	color: #000;
+    text-decoration: none;
+    padding: 3px 6px;
+}
+
+#quota_display {
+    position: fixed;
+    display: none;
+    top: 60px;
+    width: 40%;
+    left: 30%;
+    border: 1px solid black;
+    background-color: #fec;
+	box-shadow: 2px 2px 15px #642;
+    z-index: 100;
+    padding: 5px;
+    text-align: center;
+}
+#quota_display h3 {
+    margin: 0;
+}
+#quota_time {
+    display: inline-block;
+}
+
+/* Search Section */
+
+#search_field {
+    display: inline-block;
+    width: calc(100% - 550px);
+    height: 30px;
+    border: 1px solid #999;
+    border-radius: 15px;
+    margin: 10px;
+    margin-left: 70px;
+    padding: 5px 15px;
+    font-size: 18px;
+}
+#search_field:hover, #search_field:focus, #search_field:active {
+    border: 1px solid #000;
+}
+
+.name_hit {
+    display: inline-block;
+    background-color: #f66;
+}
+.desc_hit {
+    display: inline-block;
+    background-color: #faa;
+}
+
+/* State Select Section */
+
+#package_list {
+    margin-top: 120px;
+    display: inline-block;
+    width: 40%;
+    vertical-align: top;
+    padding: 10px;
+    margin-left: 20px;
+}
+
+.package_entry {
+	background-color: #fff;
+	box-shadow: 2px 2px 15px #333;
+    padding: 8px;
+    margin-bottom: 30px;
+}
+.package_entry h2 {
+    margin: 0;
+}
+
+.state_list {
+    padding-left: 5px;
+}
+
+.state_entry {
+    list-style-type: none;
+	padding: 5px;
+	margin: 0;
+	margin-bottom: 3px;
+	cursor: pointer;
+}
+.state_entry:hover {
+	color: #666;
+}
+
+/* State Details Section */
+
+#state_details_hint {
+    top: 120px;
+    position: fixed;
+    display: inline-block;
+    width: calc(60% - 116px);
+    height: calc(100% - 166px);
+    overflow: none;
+    font-family: helvetica;
+    font-size: 30px;
+	color: #bbb;
+    text-align: center;
+    padding: 8px;
+    padding-top: 10%;
+    margin: 10px;
+    margin-left: 30px;
+}
+
+#state_details {
+    top: 120px;
+    position: fixed;
+    display: none;
+	background-color: #fff;
+	box-shadow: 2px 2px 15px #333;
+    width: calc(60% - 116px);
+    max-height: calc(100% - 166px);
+    overflow: auto;
+	line-height: 1.4em;
+	text-align: justify;
+	font-family: helvetica;
+	color: #333;
+    vertical-align: top;
+    padding: 8px;
+    margin: 10px;
+    margin-left: 30px;
+}
+#state_details h2 {
+	margin: 5px;
+	margin-bottom: 15px;
+	text-align: center;
+}
+
+#state_details_description {
+    margin-bottom: 10px;
+}
+
+#state_details_table {
+    margin-left: 10px;
+}
+
+.state_details_content {
+    margin-left: 2px;
+}
+.state_details_content li {
+    margin-bottom: 8px;
+    line-height: 1.5em;
+}
+
+#state_details_history {
+    padding-left: 30px;
+}
+#state_details_history li {
+    list-style-type: none;
+    margin-bottom: 8px;
+    text-indent: -20px ;
+}
