@@ -8,6 +8,13 @@ function httpGetAsync(action, callback)
     xmlHttp.open("GET", action, true); // true for asynchronous 
     xmlHttp.send(null);
 }
+function httpPostAsync(action, data)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("POST", action, true); // true for asynchronous
+    xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xmlHttp.send(data);
+}
 function updateTimeout(reset) {
     var now = new Date();
     var diffSec = Math.floor(reset - now.valueOf() / 1000);
@@ -27,8 +34,9 @@ function updateTimeout(reset) {
 function checkQuota(callback) {
     httpGetAsync("https://api.github.com/rate_limit", reply => {
         var result = JSON.parse(reply);
+        var low = result.resources.core.remaining < 40;
         var available = result.resources.core.remaining > 0;
-        callback(available);
+        callback(available, low);
         if (!available) {
             document.getElementById("quota_display").style.display = "block";
             updateTimeout(result.resources.core.reset);
@@ -40,16 +48,48 @@ function getContents(owner, repo, ref, path, callback) {
     /*checkQuota(available => {
         console.log(available);
     });
-    var testresult = [];
-    ['calculation_state.py', '__init__.py', 'decision_state.py', 'log_state.py', 'wait_state.py'].forEach(name => {
-        testresult.push({'name': name, 'path': path.replace(/\d/g, '') + "/" + name});
+    httpGetAsync("http://philserver.bplaced.net/fbe/statelib_cache/index.php?cmd=getContents&owner="+owner+"&repo="+repo+"&ref="+ref+"&path="+path, result => {
+        if (result == "") {
+            console.log("!!!!");
+        } else {
+            callback(result);
+        }
     });
-    callback(JSON.stringify(testresult));
+    // var testresult = [];
+    // ['calculation_state.py', '__init__.py', 'decision_state.py', 'log_state.py', 'wait_state.py'].forEach(name => {
+    //     testresult.push({'name': name, 'path': path.replace(/\d/g, '') + "/" + name});
+    // });
+    // httpPostAsync(
+    //     "http://philserver.bplaced.net/fbe/statelib_cache/index.php",
+    //     "set=setContents&owner="+owner+"&repo="+repo+"&ref="+ref+"&path="+path+"&data="+JSON.stringify(testresult)
+    // );
+    // callback(JSON.stringify(testresult));
     return;
     //*/
-    checkQuota(available => {
-        if (!available) return;
-        httpGetAsync("https://api.github.com/repos/" + owner + "/" + repo + "/contents/" + path + "?ref=" + ref, callback);
+    var getFromGithub = function() {
+        httpGetAsync("https://api.github.com/repos/" + owner + "/" + repo + "/contents/" + path + "?ref=" + ref, result => {
+            httpPostAsync(
+                "http://philserver.bplaced.net/fbe/statelib_cache/index.php",
+                "set=setContents&owner="+owner+"&repo="+repo+"&ref="+ref+"&path="+path+"&data="+result
+            );
+            callback(result);
+        });
+    }
+    checkQuota((available, low) => {
+        if (low) {
+            httpGetAsync("http://philserver.bplaced.net/fbe/statelib_cache/index.php?cmd=getContents&owner="+owner+"&repo="+repo+"&ref="+ref+"&path="+path, result => {
+                if (result != "") {
+                    console.log("get from server");
+                    callback(result);
+                } else if(available) {
+                    console.log("failed from server, try github");
+                    getFromGithub();
+                }
+            });
+        } else {
+            console.log("get from github");
+            getFromGithub();
+        }
     });
 }
 function getRaw(owner, repo, ref, path, callback) {
@@ -67,11 +107,13 @@ function listCommits(owner, repo, ref, path, callback) {
     ]));
     return;
     //*/
-    checkQuota(available => {
+    checkQuota((available, low) => {
         if (!available) return;
         httpGetAsync("https://api.github.com/repos/" + owner + "/" + repo + "/commits" + "?path=" + path + "&sha=" + ref, callback);
     });
 }
+
+// Cache server updates
 
 function displayCommitHistory(history, div) {
     var formatEntry = function(entry) {
