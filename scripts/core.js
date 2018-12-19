@@ -8,6 +8,7 @@ function httpGetAsync(action, callback)
     xmlHttp.open("GET", action, true); // true for asynchronous 
     xmlHttp.send(null);
 }
+
 function updateTimeout(reset) {
     var now = new Date();
     var diffSec = Math.floor(reset - now.valueOf() / 1000);
