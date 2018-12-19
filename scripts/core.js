@@ -12,8 +12,6 @@ function httpPostAsync(action, data)
 {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("POST", action, true); // true for asynchronous
-    xmlHttp.setRequestHeader("Access-Control-Request-Method", "POST");
-    xmlHttp.setRequestHeader("Access-Control-Request-Headers", "X-PINGOTHER, Content-Type");
     xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xmlHttp.send(data);
 }
@@ -36,7 +34,7 @@ function updateTimeout(reset) {
 function checkQuota(callback) {
     httpGetAsync("https://api.github.com/rate_limit", reply => {
         var result = JSON.parse(reply);
-        var low = result.resources.core.remaining < 60;
+        var low = result.resources.core.remaining < 40;
         var available = result.resources.core.remaining > 0;
         callback(available, low);
         if (!available) {
